@@ -12,7 +12,6 @@
       }
     };
     http.send(fd);
-    console.log(data);
     console.log(e);
   });
 })();
