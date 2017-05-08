@@ -1,0 +1,27 @@
+service: oscon-serverless
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+custom:
+  bucketName: oscon-selfies
+
+functions:
+  create:
+    handler: index.create
+    memorySize: 128
+    timeout: 30
+    environment:
+      BUCKET: ${self:custom.bucketName}
+    events:
+      - http:
+          path: selfie/create
+          method: post
+
+resources:
+  Resources:
+    newResource:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}

@@ -18,7 +18,7 @@ module.exports.create = (event, context, cb) => {
       .write(fileName, (err) => {
         if (err) {
           console.log("Error writing file: ", err)
-          return cb(err, image)
+          return cb(err, event.data)
         }
         var imgdata = fs.readFileSync(fileName)
         var s3params = {
