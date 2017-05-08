@@ -1,0 +1,26 @@
+{
+  "name": "oscon-serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pselle/oscon-serverless.git"
+  },
+  "keywords": [
+    "serverless",
+    "selfies"
+  ],
+  "author": "Pam Selle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pselle/oscon-serverless/issues"
+  },
+  "homepage": "https://github.com/pselle/oscon-serverless#readme",
+  "dependencies": {
+    "gm": "^1.23.0"
+  }
+}
