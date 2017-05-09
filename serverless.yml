@@ -6,7 +6,7 @@ provider:
   stage: prod
 
 custom:
-  bucketName: oscon-selfies
+  bucketName: oscon-selfies-2017
 
 functions:
   create:
@@ -21,9 +21,9 @@ functions:
           method: post
           cors: true
 
-resources:
-  Resources:
-    selfiesBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.bucketName}
+# resources:
+#   Resources:
+#     selfiesBucket:
+#       Type: AWS::S3::Bucket
+#       Properties:
+#         BucketName: ${self:custom.bucketName}
