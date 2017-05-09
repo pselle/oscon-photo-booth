@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/pselle/oscon-serverless#readme",
   "dependencies": {
-    "gm": "^1.23.0"
+    "busboy": "^0.2.14",
+    "gm": "^1.23.0",
+    "multiparty": "^4.1.3"
   }
 }
