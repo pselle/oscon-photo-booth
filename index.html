@@ -40,14 +40,16 @@
 <body>
 
   <header class="header">
-    <h1 class="header__title">OSCON Selfie Maker!</h1>
+    <h1 class="header__title">OSCON Mobile Photo Booth</h1>
   </header>
 
   <main>
     <h1>Upload a selfie!</h1>
     <form id="imageForm" action="https://31w7u6bill.execute-api.us-east-1.amazonaws.com/prod/selfie/create" method="POST">
       <input id="imageUpload" type="file" accept="image/*"/>
-      <input type="submit" value="Submit"/>
+      <div>
+        <input type="submit" value="Get your photo!"/>
+      </div>
     </form>
     <img id="selfieResult" />
   </main>
