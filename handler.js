@@ -1,17 +1,9 @@
 'use strict';
 /* AWS Lambda ships with imageMagick out of the box */
 const imageMagick = require('gm').subClass({ imageMagick: true }),
-    busboy = require('busboy'),
     AWS = require('aws-sdk'),
     s3 = new AWS.S3(),
     fs = require('fs');
-
-const headers = {
-  'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'OPTIONS, POST',
-  'Access-Control-Allow-Headers': 'Content-Type'
-};
 
 function doMagic(image, fileEnding) {
   return new Promise((resolve, reject) => {
@@ -79,11 +71,13 @@ function decodeBase64Image(dataString) {
 exports.newSelfie = function(event, context) {
   const fileNum = Math.floor(Math.random() * 1000);
   var imageBuffer = decodeBase64Image(event.body);
-  // const filename = `/tmp/test1.${imageBuffer.ending}`;
-  const filename = `original-${fileNum}.${imageBuffer.ending}`;
+  const filename = `/tmp/original-${fileNum}.${imageBuffer.ending}`;
+  // Write data to a file we can use in imageMagick
   fs.writeFileSync(filename, imageBuffer.data);
+  // Do the magic
   doMagic(filename, imageBuffer.ending)
     .then(function(fileLocation) {
+      // Just a little bit of callback heck to get us to s3
       writeToS3(fileLocation)
         .then(function(response) {
           context.succeed(response);
