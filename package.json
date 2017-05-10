@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "sls invoke local -f new -p events/event.json",
+    "remote": "sls invoke -f new -p events/event.json",
+    "failing": "sls invoke local -f new -p events/badEvent.json"
   },
   "repository": {
     "type": "git",
@@ -22,5 +25,8 @@
   "homepage": "https://github.com/pselle/oscon-serverless#readme",
   "dependencies": {
     "gm": "^1.23.0"
+  },
+  "devDependencies": {
+    "serverless": "^1.12.1"
   }
 }
