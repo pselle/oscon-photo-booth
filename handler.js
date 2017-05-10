@@ -13,13 +13,13 @@ function doMagic(image, fileEnding) {
       .border(30, 40)
       .fontSize(24)
       .fill("RGB(255,255,255)")
-      .font('URWTypewriterT.ttf')
+      .font('resources/URWTypewriterT.ttf')
       .drawText(165, 30, "OSCON 2017")
       .write(`/tmp/sourceFile`, (err) => {
         if (err) {
           return reject(err);
         }
-        return resolve('/tmp/sourceFile-1.png');
+        return resolve('/tmp/sourceFile');
       });
   });
 }
