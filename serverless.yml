@@ -9,6 +9,17 @@ custom:
   bucketName: oscon-selfies-2017
 
 functions:
+  new:
+    handler: handler.newSelfie
+    memorySize: 128
+    timeout: 30
+    environment:
+      BUCKET: ${self:custom.bucketName}
+    events:
+      - http:
+          path: selfie/new
+          method: post
+          cors: true
   create:
     handler: handler.create
     memorySize: 128
