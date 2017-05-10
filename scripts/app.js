@@ -10,9 +10,12 @@
     reader.addEventListener("load", function () {
       fetch("https://31w7u6bill.execute-api.us-east-1.amazonaws.com/prod/selfie/new", {
         method: "POST",
+        mode: "cors",
         body: reader.result
+      }).then(function(response) {
+        return response.json()
       }).then(function(res) {
-        document.getElementById('selfieResult').src = res.body.message;
+        document.getElementById('selfieResult').src = res.message;
       }).catch(function(err) {
         console.log(err);
       });
