@@ -26,7 +26,7 @@ function doMagic(image, fileEnding) {
 
 function writeToS3(sourceFile) {
   return new Promise((resolve, reject) => {
-    const fileNum = Math.floor(Math.random() * 1000),
+    const fileNum = Math.floor(Math.random() * 100000),
         s3filename = `selfie-${fileNum}.jpg`,
         imgdata = fs.readFileSync(sourceFile),
         s3params = {
@@ -57,7 +57,7 @@ function decodeBase64Image(dataString) {
   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
 
-  if (matches.length !== 3) {
+  if (!matches || matches.length !== 3) {
     return new Error('Invalid input string');
   }
 
@@ -69,8 +69,11 @@ function decodeBase64Image(dataString) {
 }
 
 exports.newSelfie = function(event, context) {
-  const fileNum = Math.floor(Math.random() * 1000);
-  var imageBuffer = decodeBase64Image(event.body);
+  const fileNum = Math.floor(Math.random() * 100000);
+  const imageBuffer = decodeBase64Image(event.body);
+  if (imageBuffer instanceof Error) {
+    return context.fail({ statusCode: 500, body: imageBuffer.message });
+  }
   const filename = `/tmp/original-${fileNum}.${imageBuffer.ending}`;
   // Write data to a file we can use in imageMagick
   console.log('write the file to ', filename);
@@ -82,15 +85,16 @@ exports.newSelfie = function(event, context) {
       // Just a little bit of callback heck to get us to s3
       writeToS3(fileLocation)
         .then(function(response) {
+          console.log('sending success')
           context.succeed(response);
         })
         .catch(function(e) {
           console.log(e)
-          context.fail({ statusCode: 500, body: JSON.stringify(e), headers });
+          context.fail({ statusCode: 500, body: JSON.stringify(e) });
         })
     })
     .catch(function(e) {
       console.log(e)
-      context.fail({ statusCode: 500, body: JSON.stringify(e), headers });
+      context.fail({ statusCode: 500, body: JSON.stringify(e) });
     })
 }

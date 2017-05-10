@@ -12,7 +12,7 @@ functions:
   new:
     handler: handler.newSelfie
     memorySize: 128
-    timeout: 30
+    timeout: 180
     environment:
       BUCKET: ${self:custom.bucketName}
     events:
