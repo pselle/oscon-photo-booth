@@ -1,6 +1,6 @@
 {
-  "name": "Weather",
-  "short_name": "Weather",
+  "name": "OSCON Selfie Maker",
+  "short_name": "OSCON Selfies",
   "icons": [{
     "src": "images/icons/icon-128x128.png",
       "sizes": "128x128",
@@ -24,6 +24,6 @@
     }],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#3E4EB8",
-  "theme_color": "#2F3BA2"
+  "background_color": "#B9002D",
+  "theme_color": "#B9002D"
 }
