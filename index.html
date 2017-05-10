@@ -42,10 +42,11 @@
 
   <main>
     <h1>Upload a selfie!</h1>
-    <form id="imageForm">
+    <form id="imageForm" action="https://31w7u6bill.execute-api.us-east-1.amazonaws.com/prod/selfie/create" method="POST">
       <input id="imageUpload" type="file" accept="image/*"/>
       <input type="submit" value="Submit"/>
     </form>
+    <img id="selfieResult" />
   </main>
 
   <script src="scripts/app.js" async></script>
