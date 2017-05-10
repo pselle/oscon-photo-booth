@@ -8,7 +8,7 @@
     var reader  = new FileReader();
 
     reader.addEventListener("load", function () {
-      fetch("https://31w7u6bill.execute-api.us-east-1.amazonaws.com/prod/selfie/new", {
+      fetch("https://mozkrlz5di.execute-api.us-east-1.amazonaws.com/prod/selfie/new", {
         method: "POST",
         mode: "cors",
         body: reader.result
