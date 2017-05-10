@@ -61,64 +61,6 @@ function writeToS3(sourceFile) {
   });
 }
 
-module.exports.create = function handler(event, context, cb) {
-  var contentType = event.headers['Content-Type'] || event.headers['content-type'];
-  var bb = new busboy({ headers: { 'content-type': contentType }});
-
-  bb.on('file', function (fieldname, file, filename, encoding, mimetype) {
-    console.log('File [%s]: filename=%j; encoding=%j; mimetype=%j', fieldname, filename, encoding, mimetype);
-    const fileEnding = mimetype.split('/')[1]
-    file.pipe(fs.createWriteStream(`/tmp/srcimg.${fileEnding}`))
-      .on('finish', function() {
-        console.log('Successfully wrote file');
-        // doMagic(`/tmp/srcimg.${fileEnding}`, fileEnding).then(function(src) {
-        //   console.log(src);
-        //   console.log("HUZZAH")
-        // }).catch((err => {console.log(err)}))
-        writeToS3(`/tmp/srcimg.${fileEnding}`)
-          .then(function(response) {
-            context.succeed(response)
-          }).catch((err) => {
-            console.log(err)
-            context.fail({ statusCode: 500, body: err, headers });
-          })
-    });
-
-    file.on('data', function(data) {
-       console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
-     }).on('end', function() {
-       console.log('File [' + fieldname + '] Finished');
-     });
-  })
-  .on('field', (fieldname, val) =>console.log('Field [%s]: value: %j', fieldname, val))
-  .on('finish', () => {
-    console.log('Done parsing form!');
-    // context.succeed({ statusCode: 200, body: 'all done', headers });
-  })
-  .on('error', err => {
-    console.log('failed', err);
-    context.fail({ statusCode: 500, body: err, headers });
-  });
-
-  bb.end(event.body);
-}
-
-
-exports.image = function(event, context) {
-  imageMagick('photo.jpg')
-  .resize(400)
-  .borderColor("RGB(185,0,45)") // OSCON red
-  .border(30, 40)
-  .fontSize(24)
-  .fill("RGB(255,255,255)")
-  .font('URWTypewriterT.ttf')
-  .drawText(165, 30, "OSCON 2017")
-  .write('foo.jpg', (err) => {
-    console.log(err)
-  })
-  context.succeed();
-}
-
 function decodeBase64Image(dataString) {
   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
