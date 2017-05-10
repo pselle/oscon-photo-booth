@@ -1,4 +1,4 @@
-service: oscon-serverless
+service: oscon-photo-booth
 
 provider:
   name: aws
@@ -6,7 +6,7 @@ provider:
   stage: prod
 
 custom:
-  bucketName: oscon-selfies-2017
+  bucketName: oscon-2017-selfies
 
 functions:
   new:

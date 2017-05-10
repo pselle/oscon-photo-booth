@@ -44,6 +44,9 @@ function writeToS3(sourceFile) {
         }
         return resolve({
           statusCode: 200,
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
           body: JSON.stringify({
             message: `https://s3.amazonaws.com/${s3params.Bucket}/${s3filename}`
           })

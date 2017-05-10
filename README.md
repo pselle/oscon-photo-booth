@@ -1,4 +1,4 @@
-# OSCON Selfie Booth
+# OSCON Mobile Photo Booth
 
 This function takes an image data string and uses imageMagick to transform
 the image into a "photo booth" image.
@@ -30,3 +30,13 @@ Run `sls deploy`
 
 Invoke remotely using `npm run remote`, or (if you have Serverless installed
 globally), run `sls invoke -f new -p events/event.json`
+
+## Removing
+
+Don't leave rogue resources out on AWS! If/when you're done playing, use `serverless remove`
+to delete the resources that were provisioned for the project.
+
+## Troubleshooting
+
+When deployed, you'll need to make sure the IAM role (which you can see in the lambda console)
+your function is using has S3 access, otherwise the function will fail on an access error.
