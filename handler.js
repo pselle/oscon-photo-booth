@@ -73,20 +73,24 @@ exports.newSelfie = function(event, context) {
   var imageBuffer = decodeBase64Image(event.body);
   const filename = `/tmp/original-${fileNum}.${imageBuffer.ending}`;
   // Write data to a file we can use in imageMagick
+  console.log('write the file to ', filename);
   fs.writeFileSync(filename, imageBuffer.data);
   // Do the magic
   doMagic(filename, imageBuffer.ending)
     .then(function(fileLocation) {
+      console.log('imagemagic succeeded')
       // Just a little bit of callback heck to get us to s3
       writeToS3(fileLocation)
         .then(function(response) {
           context.succeed(response);
         })
         .catch(function(e) {
+          console.log(e)
           context.fail({ statusCode: 500, body: JSON.stringify(e), headers });
         })
     })
     .catch(function(e) {
+      console.log(e)
       context.fail({ statusCode: 500, body: JSON.stringify(e), headers });
     })
 }
